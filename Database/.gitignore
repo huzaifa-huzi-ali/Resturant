@@ -1,6 +1,6 @@
-.env
-.env.*
+*Database
 node_modules
+*.sql
+*.env
 *.json
 *.json.*
-
