@@ -2,8 +2,11 @@ import React from 'react';
 
 const ManageMenu = () => {
   return (
-    <div className="admin-manage-menu-page">
-      {/* Manage menu page content */}
+    <div className="page-container">
+      <h1>🍽️ Manage Menu</h1>
+      <div className="section">
+        <p>Add, edit, or remove menu items</p>
+      </div>
     </div>
   );
 };
