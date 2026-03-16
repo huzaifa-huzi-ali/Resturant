@@ -1,0 +1,9 @@
+[build]
+command = "npm install"
+
+[deploy]
+command = "npm start"
+
+[variables]
+NIXPACKS_PROJECT_PATH = "Backend"
+NIXPACKS_NODE_VERSION = "18"
