@@ -1,6 +1,6 @@
 const reviewRepo = require('./review.repository');
 const { toReview, toReviewList } = require('./review.model');
-const { v7: uuidv7 } = require('uuid');
+const { uuidv7 } = require('uuidv7');
 
 const createReview = async (userId, { menu_item_id, rating, comment }) => {
   if (!(await reviewRepo.menuItemExists(menu_item_id))) {

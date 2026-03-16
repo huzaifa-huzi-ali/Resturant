@@ -1,6 +1,6 @@
 const contactRepo = require('./contact.repository');
 const { toContactMessage, toContactList } = require('./contact.model');
-const { v7: uuidv7 } = require('uuid');
+const { uuidv7 } = require('uuidv7');
 
 const send = async (data) => {
   const row = await contactRepo.create({ id: uuidv7(), ...data });

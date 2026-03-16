@@ -1,6 +1,6 @@
 const menuRepo = require('./menu.repository');
 const { toMenuItem, toMenuItemList } = require('./menu.model');
-const { v7: uuidv7 } = require('uuid');
+const { uuidv7 } = require('uuidv7');
 
 const getAll = async (filters) => {
   const rows = await menuRepo.findAll(filters);

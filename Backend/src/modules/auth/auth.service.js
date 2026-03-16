@@ -2,7 +2,7 @@ const authRepo = require('./auth.repository');
 const { toPublicUser } = require('./auth.model');
 const { hashPassword, comparePassword } = require('../shared/utils/hashpassword');
 const { signToken } = require('../shared/utils/jwt');
-const { v7: uuidv7 } = require('uuid');
+const { uuidv7 } = require('uuidv7');
 
 /**
  * Register a new user.

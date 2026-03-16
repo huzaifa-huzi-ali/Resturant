@@ -1,7 +1,7 @@
 const paymentRepo = require('./payment.repository');
 const orderRepo = require('../order/order.repository');
 const { toPayment } = require('./payment.model');
-const { v7: uuidv7 } = require('uuid');
+const { uuidv7 } = require('uuidv7');
 
 const initiatePayment = async (userId, { order_id, payment_method }) => {
   const order = await paymentRepo.findOrderForPayment(order_id, userId);

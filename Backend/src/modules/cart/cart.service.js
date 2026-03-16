@@ -1,6 +1,6 @@
 const cartRepo = require('./cart.repository');
 const { toCart } = require('./cart.model');
-const { v7: uuidv7 } = require('uuid');
+const { uuidv7 } = require('uuidv7');
 
 const getCart = async (userId) => {
   const cart = await cartRepo.findOrCreateCart(uuidv7(), userId);

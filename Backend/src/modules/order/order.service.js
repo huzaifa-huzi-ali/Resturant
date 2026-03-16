@@ -1,6 +1,6 @@
 const orderRepo = require('./order.repository');
 const { toOrder, toOrderList } = require('./order.model');
-const { v7: uuidv7 } = require('uuid');
+const { uuidv7 } = require('uuidv7');
 
 const VALID_STATUSES = ['pending', 'confirmed', 'preparing', 'out_for_delivery', 'delivered', 'cancelled'];
 
