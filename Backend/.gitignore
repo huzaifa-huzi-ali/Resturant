@@ -4,3 +4,18 @@ node_modules
 *.json
 *.json.*
 
+# Database backups
+*.sql.dump
+*.backup
+*.bak
+
+# PostgreSQL data
+postgres-data/
+pgdata/
+
+# Docker volumes
+docker/postgres-data/
+
+# Logs
+logs/
+*.log

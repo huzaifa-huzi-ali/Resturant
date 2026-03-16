@@ -1,24 +1,15 @@
 import { useCartContext } from '../context/CartContext';
 
 const useCart = () => {
-  const { cart, setCart } = useCartContext();
-
-  const addToCart = (item) => {
-    // Add item to cart logic
-  };
-
-  const removeFromCart = (itemId) => {
-    // Remove item from cart logic
-  };
-
-  const clearCart = () => {
-    setCart([]);
-  };
+  const { cart, addToCart, removeFromCart, updateQuantity, getTotalItems, getTotalPrice, clearCart } = useCartContext();
 
   return {
     cart,
     addToCart,
     removeFromCart,
+    updateQuantity,
+    getTotalItems,
+    getTotalPrice,
     clearCart,
   };
 };
