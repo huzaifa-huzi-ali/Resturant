@@ -1,0 +1,8 @@
+[build]
+command = "cd Backend && npm install"
+
+[deploy]
+command = "cd Backend && npm start"
+
+[variables]
+NIXPACKS_NODE_VERSION = "18"
