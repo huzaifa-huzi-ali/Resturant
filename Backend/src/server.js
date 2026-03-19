@@ -1,17 +1,7 @@
-const express = require ('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const app = express();
-app.use(cors());
-app.use(bodyParser.json());
-const port = 3000;
+const app = require('./app');
+const env = require('./modules/shared/config/env');
 
-
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+app.listen(env.PORT, () => {
+  console.log(`✅ Server is running on port ${env.PORT}`);
+  console.log(`📡 Health check: http://localhost:${env.PORT}/api/health`);
 });
-
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
-

@@ -9,20 +9,25 @@ export const ORDER_STATUS = {
   PENDING: 'pending',
   CONFIRMED: 'confirmed',
   PREPARING: 'preparing',
-  READY: 'ready',
+  OUT_FOR_DELIVERY: 'out_for_delivery',
   DELIVERED: 'delivered',
   CANCELLED: 'cancelled',
 };
 
 export const USER_ROLES = {
-  USER: 'user',
+  CUSTOMER: 'customer',
   ADMIN: 'admin',
 };
 
 export const API_ENDPOINTS = {
+  AUTH_REGISTER: '/auth/register',
+  AUTH_LOGIN: '/auth/login',
   MENU: '/menu',
+  CATEGORIES: '/categories',
   ORDERS: '/orders',
+  CART: '/cart',
   USERS: '/users',
   PAYMENTS: '/payments',
   CONTACT: '/contact',
+  REVIEWS: '/reviews',
 };
