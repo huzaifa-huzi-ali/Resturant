@@ -6,6 +6,7 @@ import CartSidebar from './components/cart/CartSidebar';
 import AppRoutes from './routes/AppRoutes';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
+import ChatWidget from './components/chat/ChatWidget';
 import './assets/styles/global.css';
 import './assets/styles/variables.css';
 import './App.css';
@@ -30,6 +31,7 @@ function App() {
           <CartSidebar isOpen={isCartOpen} onClose={closeCart} />
           <div className="app-container">
             <AppRoutes />
+            <ChatWidget />
           </div>
         </CartProvider>
       </AuthProvider>
