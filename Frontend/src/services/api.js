@@ -3,7 +3,7 @@ import { STORAGE_KEYS } from '../config';
 
 // Determine API base URL based on environment
 const API_BASE_URL = import.meta.env.PROD 
-  ? 'https://celia-backend.onrender.com/api'  // Production Render backend
+  ? 'https://celia-lfzn.onrender.com/api'  // Production Render backend
   : (import.meta.env.VITE_API_URL || 'http://localhost:5000/api');  // Local development
 
 const api = axios.create({
