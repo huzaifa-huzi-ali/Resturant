@@ -1,13 +1,15 @@
-const redisClient = require('../config/redis');
+const { getClient } = require('../config/redis');
 
 const cacheMiddleware = (keyGenerator, ttl = 600) => {
   return async (req, res, next) => {
     try {
       const key = keyGenerator(req);
+      const client = getClient();
 
-      const cachedData = await redisClient.get(key);
+      const cachedData = await client.get(key);
 
       if (cachedData) {
+        res.setHeader('X-Cache', 'HIT');
         return res.json(JSON.parse(cachedData));
       }
 
@@ -15,16 +17,17 @@ const cacheMiddleware = (keyGenerator, ttl = 600) => {
 
       res.json = async (data) => {
         try {
-          await redisClient.setEx(key, ttl, JSON.stringify(data));
+          res.setHeader('X-Cache', 'MISS');
+          await client.setEx(key, ttl, JSON.stringify(data));
         } catch (cacheErr) {
-          console.error("Cache Set Error:", cacheErr);
+          console.warn('⚠️ Cache Set Error:', cacheErr.message);
         }
         return originalJson(data);
       };
 
       next();
     } catch (err) {
-      console.error("Cache Check Error:", err);
+      console.warn('⚠️ Cache Check Error:', err.message);
       next();
     }
   };

@@ -1,12 +1,13 @@
 const reviewService = require('./review.service');
-const redisClient = require('../shared/config/redis');
+const { getClient } = require('../shared/config/redis');
 
 const clearReviewCache = async () => {
   try {
-    const keys = await redisClient.keys('reviews:*');
-    if (keys.length > 0) await redisClient.del(keys);
+    const client = getClient();
+    const keys = await client.keys('reviews:*');
+    if (keys.length > 0) await client.del(keys);
   } catch (err) {
-    console.error('Redis cache clear error:', err);
+    console.warn('Redis cache clear error:', err.message);
   }
 };
 

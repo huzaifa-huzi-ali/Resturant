@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react'; // Added useEffect
 import { motion } from 'framer-motion';
 import { useCartContext } from '../../context/CartContext';
 import './Menu.css';
@@ -7,82 +7,38 @@ const Menu = () => {
   const { addToCart } = useCartContext();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  
+  // NEW: State for items coming from the Database
+  const [allItems, setAllItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // All Menu Items
-  const allItems = [
-    {
-      id: 1,
-      title: 'Saffron Infused Scallops',
-      category: 'Special Cuisine',
-      description: 'Pan-seared Hokkaido scallops, saffron foam, asparagus spears, and herb-infused oil.',
-      price: 38,
-      image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-      id: 2,
-      title: 'Charred Wagyu Ribeye',
-      category: 'Special Cuisine',
-      description: '14oz A5 Wagyu, smoked sea salt, roasted rainbow carrots, and garlic-herb marrow butter.',
-      price: 85,
-      image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-      id: 3,
-      title: 'Black Garlic Pasta',
-      category: 'Special Cuisine',
-      description: 'Handmade squid ink linguine, fermented black garlic, chili flakes, and toasted pine nuts.',
-      price: 28,
-      image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-      id: 4,
-      title: 'Truffle Arancini',
-      category: 'Special Cuisine',
-      description: 'Wild mushroom risotto spheres, black truffle aioli, and 24-month aged Parmigiano.',
-      price: 22,
-      image: 'https://images.unsplash.com/photo-1626844131082-256783844137?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-      id: 5,
-      title: 'Midnight Orchid Martini',
-      category: 'Drinks',
-      description: 'Premium violet gin, elderflower liqueur, lemon zest, and an edible orchid garnish.',
-      price: 18,
-      image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-      id: 6,
-      title: 'Gold Leaf Espresso Martini',
-      category: 'Drinks',
-      description: 'Single-origin espresso, premium vodka, coffee liqueur, topped with 24k gold flakes.',
-      price: 22,
-      image: 'https://www.goldchef.shop/wp-content/uploads/2023/06/fascia_espresso-martini_gold_leaf_F82_2784_web.jpg',
-    },
-    {
-      id: 7,
-      title: 'Dark Chocolate Dome',
-      category: 'Sweets',
-      description: '70% Valrhona chocolate, molten raspberry center, espresso soil, and gold leaf.',
-      price: 18,
-      image: 'https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-      id: 8,
-      title: 'Pistachio Baklava Cheesecake',
-      category: 'Sweets',
-      description: 'Creamy honey cheesecake layered with crispy filo pastry and crushed roasted pistachios.',
-      price: 16,
-      image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-      id: 9,
-      title: 'Lavender Crème Brûlée',
-      category: 'Sweets',
-      description: 'Classic vanilla bean custard infused with organic lavender, topped with a glass-like sugar crust.',
-      price: 15,
-      image: 'https://entertainingwithbeth.com/wp-content/uploads/2018/03/LavenderCremeBruleeRecipe-1024x683.jpg',
-    },
-  ];
+  // NEW: Fetch data from Backend (Supabase)
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/menu`);
+        const data = await response.json();
+        
+        // Map Database names to your UI names if they differ
+        const mappedData = data.map(item => ({
+          id: item.id,
+          title: item.name,              // 'name' in DB -> 'title' in UI
+          category: item.category_name || 'Special Cuisine', // Adjust based on your join
+          description: item.description,
+          price: parseFloat(item.price), // Ensure price is a number
+          image: item.image_url          // 'image_url' in DB -> 'image' in UI
+        }));
+
+        setAllItems(mappedData);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching menu:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchMenu();
+  }, []);
 
   const categories = ['All', 'Special Cuisine', 'Drinks', 'Sweets'];
 
@@ -95,11 +51,19 @@ const Menu = () => {
         item.description.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [searchQuery, selectedCategory, allItems]); // Added allItems to dependency
 
   const handleAddToCart = (item) => {
     addToCart(item);
   };
+
+  if (loading) {
+    return (
+      <div className="menu-page" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Loading Célia's Selection...</motion.p>
+      </div>
+    );
+  }
 
   return (
     <div className="menu-page">

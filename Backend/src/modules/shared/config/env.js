@@ -2,8 +2,8 @@ const dotenv = require('dotenv');
 const path = require('path');
 
 // Load .env from Backend root
-dotenv.config({ path: path.join(__dirname, '..', '..', '..', '..', '.env') });
-
+// Change line 5 to this:
+dotenv.config({ path: path.join(__dirname, '..', '..', '..', '..', '..', '.env') });
 const env = {
   PORT: parseInt(process.env.PORT, 10) || 5000,
   DATABASE_URL: process.env.DATABASE_URL,

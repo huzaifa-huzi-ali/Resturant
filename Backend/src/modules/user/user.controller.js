@@ -1,11 +1,12 @@
 const userService = require('./user.service');
-const redisClient = require('../shared/config/redis');
+const { getClient } = require('../shared/config/redis');
 
-const clearUserProfileCache = async (userId) => {
+const clearUserCache = async (userId) => {
   try {
-    await redisClient.del(`user:profile:${userId}`);
+    const client = getClient();
+    await client.del(`user:profile:${userId}`);
   } catch (err) {
-    console.error('Redis cache clear error:', err);
+    console.warn('Redis cache clear error:', err.message);
   }
 };
 

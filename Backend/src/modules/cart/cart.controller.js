@@ -1,11 +1,12 @@
 const cartService = require('./cart.service');
-const redisClient = require('../shared/config/redis');
+const { getClient } = require('../shared/config/redis');
 
 const clearCartCache = async (userId) => {
   try {
-    await redisClient.del(`cart:user:${userId}`);
+    const client = getClient();
+    await client.del(`cart:user:${userId}`);
   } catch (err) {
-    console.error('Redis cache clear error:', err);
+    console.warn('Redis cache clear error:', err.message);
   }
 };
 

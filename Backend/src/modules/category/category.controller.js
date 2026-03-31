@@ -1,12 +1,13 @@
 const categoryService = require('./category.service');
-const redisClient = require('../shared/config/redis');
+const { getClient } = require('../shared/config/redis');
 
 const clearCategoryCache = async () => {
   try {
-    const keys = await redisClient.keys('categories:*');
-    if (keys.length > 0) await redisClient.del(keys);
+    const client = getClient();
+    const keys = await client.keys('categories:*');
+    if (keys.length > 0) await client.del(keys);
   } catch (err) {
-    console.error('Redis cache clear error:', err);
+    console.warn('Redis cache clear error:', err.message);
   }
 };
 
