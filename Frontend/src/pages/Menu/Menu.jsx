@@ -16,7 +16,7 @@ const Menu = () => {
   useEffect(() => {
     const fetchMenu = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/menu`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/menu`);
         const data = await response.json();
         
         // Map Database names to your UI names if they differ
