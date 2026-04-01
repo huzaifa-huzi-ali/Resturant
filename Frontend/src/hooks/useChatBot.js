@@ -98,7 +98,7 @@ If 'customerName', 'phone', or 'email' is null, and they are trying to finalize,
 
       // 2. Re-initialize model per request to inject fresh system instructions
       const model = genAI.getGenerativeModel({
-        model: "gemini-3.1-flash-lite-preview",
+        model: "gemini-1.5-flash",
         tools: tools,
         systemInstruction: currentSystemInstruction
       });
